@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventário de Insumos</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --petro-900: #060f12;
+      --petro-800: #0a1a20;
+      --petro-750: #0d2330;
+      --petro-700: #102c3a;
+      --petro-600: #163d50;
+      --petro-500: #1c4f66;
+      --petro-400: #246180;
+      --petro-300: #3a85a8;
+      --petro-200: #6ab5cc;
+      --petro-100: #a8d8e8;
+      --petro-50:  #ddf0f7;
+      --green-bg: #0a2018; --green-border: #165a2c; --green-text: #4fd17a; --green-strong: #1a7a3a;
+      --red-bg: #200a0a; --red-border: #5a1616; --red-text: #f07070; --red-strong: #7a1a1a;
+      --font: 'DM Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--petro-900);
+      color: var(--petro-50);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 0 0 2rem;
+    }
+
+    /* HEADER */
+    header {
+      width: 100%;
+      background: var(--petro-800);
+      border-bottom: 1px solid var(--petro-600);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    .header-icon {
+      width: 36px; height: 36px;
+      background: var(--petro-500);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    header h1 { font-size: 17px; font-weight: 600; color: var(--petro-50); letter-spacing: -0.2px; }
+    header p { font-size: 12px; color: var(--petro-300); }
+
+    /* MAIN CONTAINER */
+    #app {
+      width: 100%;
+      max-width: 520px;
+      padding: 0 1rem;
+    }
+
+    /* NAV */
+    .nav {
+      display: flex; gap: 6px;
+      background: var(--petro-800);
+      border: 1px solid var(--petro-600);
+      border-radius: 12px;
+      padding: 5px;
+      margin-bottom: 1.25rem;
+    }
+    .nav button {
+      flex: 1; padding: 9px 12px;
+      border: none; border-radius: 8px;
+      background: transparent;
+      color: var(--petro-300);
+      font-family: var(--font);
+      font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .nav button.active {
+      background: var(--petro-600);
+      color: #fff;
+    }
+    .nav button:hover:not(.active) { background: var(--petro-750); }
+
+    /* SALDO CARD */
+    .saldo-card {
+      background: linear-gradient(135deg, var(--petro-600) 0%, var(--petro-700) 100%);
+      border: 1px solid var(--petro-400);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .saldo-label {
+      font-size: 11px; font-weight: 500;
+      color: var(--petro-200);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .saldo-value {
+      font-size: 36px; font-weight: 600;
+      color: #fff;
+      letter-spacing: -1px;
+      font-family: var(--mono);
+    }
+    .saldo-sub { font-size: 12px; color: var(--petro-200); margin-top: 4px; }
+    .refresh-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--petro-300);
+      border-radius: 8px; padding: 8px 14px;
+      color: var(--petro-100); cursor: pointer;
+      font-family: var(--font); font-size: 13px;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .refresh-btn:hover { background: rgba(255,255,255,0.15); }
+
+    /* SCREEN */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 11px; font-weight: 500;
+      color: var(--petro-300);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    /* TIPO BUTTONS */
+    .tipo-buttons {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 1.25rem;
+    }
+    .tipo-btn {
+      padding: 1.1rem 1rem;
+      border-radius: 12px;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 14px; font-weight: 600;
+      transition: all 0.15s;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 6px;
+      line-height: 1.2;
+    }
+    .tipo-btn .icon {
+      font-size: 24px;
+      font-weight: 300;
+      line-height: 1;
+    }
+    .tipo-btn .sublabel { font-size: 11px; font-weight: 400; opacity: 0.7; }
+    .tipo-btn.entrada {
+      background: var(--green-bg);
+      color: var(--green-text);
+      border-color: var(--green-border);
+    }
+    .tipo-btn.entrada.selected, .tipo-btn.entrada:hover {
+      background: #122e1c;
+      border-color: var(--green-text);
+    }
+    .tipo-btn.saida {
+      background: var(--red-bg);
+      color: var(--red-text);
+      border-color: var(--red-border);
+    }
+    .tipo-btn.saida.selected, .tipo-btn.saida:hover {
+      background: #2e1212;
+      border-color: var(--red-text);
+    }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--petro-700); margin: 1.1rem 0; }
+
+    /* FORM */
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block; font-size: 13px;
+      color: var(--petro-200); margin-bottom: 6px; font-weight: 500;
+    }
+    .form-group select, .form-group input {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--petro-600);
+      border-radius: 9px;
+      background: var(--petro-800);
+      color: var(--petro-50);
+      font-family: var(--font); font-size: 15px;
+      outline: none; transition: border-color 0.15s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236ab5cc' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    .form-group select option { background: #0d2330; }
+    .form-group select:focus, .form-group input:focus {
+      border-color: var(--petro-300);
+      background: var(--petro-750);
+    }
+    .form-group input::placeholder { color: var(--petro-400); }
+    .form-group input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .ref-badge {
+      font-size: 12px; color: var(--petro-300);
+      margin-top: 5px; font-family: var(--mono);
+    }
+
+    /* SUBMIT */
+    .submit-btn {
+      width: 100%; padding: 13px;
+      border-radius: 10px; border: none;
+      cursor: pointer; font-family: var(--font);
+      font-size: 15px; font-weight: 600;
+      margin-top: 0.5rem;
+      transition: opacity 0.15s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+    .submit-btn:not(:disabled):active { transform: scale(0.98); }
+    .submit-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .submit-btn.entrada-btn {
+      background: var(--green-strong);
+      color: #b0ffd4;
+      border: 1px solid var(--green-border);
+    }
+    .submit-btn.saida-btn {
+      background: var(--red-strong);
+      color: #ffb0b0;
+      border: 1px solid var(--red-border);
+    }
+    .submit-btn.default-btn {
+      background: var(--petro-700);
+      color: var(--petro-200);
+      border: 1px solid var(--petro-500);
+    }
+
+    /* MESSAGES */
+    .msg {
+      padding: 10px 14px; border-radius: 9px;
+      margin-bottom: 1rem; font-size: 14px;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    .msg.success { background: #0a2018; color: var(--green-text); border: 1px solid var(--green-border); }
+    .msg.error   { background: #200a0a; color: var(--red-text);   border: 1px solid var(--red-border); }
+    .msg.info    { background: var(--petro-750); color: var(--petro-100); border: 1px solid var(--petro-500); }
+
+    /* HISTORICO */
+    .hist-filters {
+      display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .filter-chip {
+      padding: 5px 14px; border-radius: 20px;
+      border: 1px solid var(--petro-600);
+      background: var(--petro-800);
+      color: var(--petro-300); font-size: 13px;
+      font-family: var(--font); cursor: pointer;
+      transition: all 0.12s;
+    }
+    .filter-chip.active {
+      background: var(--petro-600);
+      color: #fff;
+      border-color: var(--petro-300);
+    }
+    .hist-item {
+      padding: 12px 14px;
+      border: 1px solid var(--petro-700);
+      border-radius: 10px; margin-bottom: 8px;
+      background: var(--petro-800);
+      display: grid; grid-template-columns: 1fr auto; gap: 4px;
+      animation: fadeIn 0.2s ease;
+    }
+    .hist-item:hover { border-color: var(--petro-500); }
+    .hist-item-name { font-size: 14px; font-weight: 500; color: var(--petro-50); }
+    .hist-item-meta { font-size: 12px; color: var(--petro-400); margin-top: 2px; font-family: var(--mono); }
+    .hist-item-qtd { font-size: 17px; font-weight: 600; text-align: right; font-family: var(--mono); }
+    .hist-item-qtd.pos { color: var(--green-text); }
+    .hist-item-qtd.neg { color: var(--red-text); }
+    .tipo-tag {
+      display: inline-block; padding: 2px 8px;
+      border-radius: 10px; font-size: 11px;
+      font-weight: 500; margin-top: 4px;
+    }
+    .tipo-tag.entrada { background: var(--green-bg); color: var(--green-text); border: 1px solid var(--green-border); }
+    .tipo-tag.saida   { background: var(--red-bg);   color: var(--red-text);   border: 1px solid var(--red-border); }
+
+    .loading, .empty {
+      text-align: center; padding: 2.5rem 1rem;
+      color: var(--petro-400); font-size: 14px;
+    }
+    .loading::before { content: "⟳ "; animation: spin 1s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* STATUS BAR */
+    .status-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--petro-800);
+      border-top: 1px solid var(--petro-700);
+      padding: 6px 16px;
+      font-size: 11px; color: var(--petro-400);
+      text-align: center; font-family: var(--mono);
+    }
+    .status-bar span { color: var(--petro-300); }
+
+    @media (max-width: 480px) {
+      header { padding: 0.875rem 1rem; }
+      #app { padding: 0 0.75rem; }
+      .saldo-value { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">📦</div>
+  <div>
+    <h1>Inventário de Insumos</h1>
+    <p>Controle de estoque e expedição</p>
+  </div>
+</header>
+
+<div id="app">
+
+  <div class="nav">
+    <button class="active" onclick="showScreen('lancamento')">⊕ Lançamento</button>
+    <button onclick="showScreen('historico')">☰ Histórico</button>
+  </div>
+
+  <div class="saldo-card">
+    <div>
+      <div class="saldo-label">Saldo total em estoque</div>
+      <div class="saldo-value" id="saldo-val">—</div>
+      <div class="saldo-sub" id="saldo-sub">carregando dados...</div>
+    </div>
+    <button class="refresh-btn" onclick="loadAll()">↻ Atualizar</button>
+  </div>
+
+  <!-- TELA LANÇAMENTO -->
+  <div id="screen-lancamento" class="screen active">
+    <div id="form-msg"></div>
+    <p class="section-title">Tipo de lançamento</p>
+    <div class="tipo-buttons">
+      <button class="tipo-btn entrada" id="btn-entrada" onclick="selectTipo('Estoque')">
+        <span class="icon">＋</span>
+        Estoque
+        <span class="sublabel">Entrada</span>
+      </button>
+      <button class="tipo-btn saida" id="btn-saida" onclick="selectTipo('Expedicao')">
+        <span class="icon">－</span>
+        Expedição
+        <span class="sublabel">Saída</span>
+      </button>
+    </div>
+
+    <hr class="divider">
+
+    <div class="form-group">
+      <label>Insumo</label>
+      <select id="sel-insumo" onchange="updateRef()">
+        <option value="">Selecione um insumo...</option>
+      </select>
+      <div class="ref-badge" id="ref-badge"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Quantidade</label>
+      <input type="number" id="inp-qtd" min="1" step="1" placeholder="0" />
+    </div>
+
+    <button class="submit-btn default-btn" id="submit-btn" onclick="submeter()" disabled>
+      Selecione tipo e insumo
+    </button>
+  </div>
+
+  <!-- TELA HISTÓRICO -->
+  <div id="screen-historico" class="screen">
+    <div id="hist-msg"></div>
+    <div class="hist-filters">
+      <button class="filter-chip active" onclick="filtrar('todos', this)">Todos</button>
+      <button class="filter-chip" onclick="filtrar('Estoque', this)">Entradas</button>
+      <button class="filter-chip" onclick="filtrar('Expedicao', this)">Saídas</button>
+    </div>
+    <div id="hist-list">
+      <div class="loading">Carregando histórico</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="status-bar">
+  Conectado a <span>Google Sheets</span> via Apps Script
+</div>
+
+<script>
+  const API = 'https://script.google.com/macros/s/AKfycbwRLuYb27DOjC7_wLz703_QA7xt1Rgz0o36mcPMOkzIQzTXZsBJdIQT0biqbWsyLOfm/exec';
+  let insumos = [], historico = [], tipoSel = null, filtroAtual = 'todos';
+
+  function showScreen(name) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav button').forEach((b, i) => {
+      b.classList.toggle('active', (name === 'lancamento' && i === 0) || (name === 'historico' && i === 1));
+    });
+    document.getElementById('screen-' + name).classList.add('active');
+  }
+
+  function selectTipo(tipo) {
+    tipoSel = tipo;
+    document.getElementById('btn-entrada').classList.toggle('selected', tipo === 'Estoque');
+    document.getElementById('btn-saida').classList.toggle('selected', tipo === 'Expedicao');
+    const btn = document.getElementById('submit-btn');
+    if (tipo === 'Estoque') {
+      btn.className = 'submit-btn entrada-btn';
+      btn.textContent = '＋ Registrar Entrada';
+    } else {
+      btn.className = 'submit-btn saida-btn';
+      btn.textContent = '－ Registrar Saída';
+    }
+    checkReady();
+  }
+
+  function updateRef() {
+    const nome = document.getElementById('sel-insumo').value;
+    const item = insumos.find(i => i.nome === nome);
+    document.getElementById('ref-badge').textContent = item ? '# Ref: ' + item.ref : '';
+    checkReady();
+  }
+
+  function checkReady() {
+    const qtd = parseFloat(document.getElementById('inp-qtd').value);
+    const ok = tipoSel && document.getElementById('sel-insumo').value && qtd > 0;
+    document.getElementById('submit-btn').disabled = !ok;
+  }
+
+  document.getElementById('inp-qtd').addEventListener('input', checkReady);
+
+  function showMsg(id, text, type) {
+    const el = document.getElementById(id);
+    el.innerHTML = `<div class="msg ${type}">${text}</div>`;
+    if (type === 'success') setTimeout(() => el.innerHTML = '', 4000);
+  }
+
+  async function loadInsumos() {
+    try {
+      const r = await fetch(API + '?action=buscarInsumos');
+      const data = await r.json();
+      insumos = data;
+      const sel = document.getElementById('sel-insumo');
+      sel.innerHTML = '<option value="">Selecione um insumo...</option>';
+      data.forEach(i => {
+        const o = document.createElement('option');
+        o.value = i.nome;
+        o.textContent = i.nome;
+        sel.appendChild(o);
+      });
+    } catch (e) {
+      showMsg('form-msg', '⚠ Erro ao carregar insumos: ' + e.message, 'error');
+    }
+  }
+
+  async function loadHistorico() {
+    document.getElementById('hist-list').innerHTML = '<div class="loading">Carregando histórico</div>';
+    try {
+      const r = await fetch(API + '?action=buscarHistorico');
+      const data = await r.json();
+      historico = data;
+      const total = data.reduce((acc, row) => acc + (parseFloat(row.qtd) || 0), 0);
+      document.getElementById('saldo-val').textContent = total.toLocaleString('pt-BR');
+      document.getElementById('saldo-sub').textContent = data.length + ' registros no total';
+      renderHistorico();
+    } catch (e) {
+      document.getElementById('hist-list').innerHTML = '<div class="empty">⚠ Erro ao carregar histórico.</div>';
+      document.getElementById('saldo-val').textContent = '—';
+      document.getElementById('saldo-sub').textContent = 'Falha na conexão';
+    }
+  }
+
+  function filtrar(tipo, el) {
+    filtroAtual = tipo;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    renderHistorico();
+  }
+
+  function renderHistorico() {
+    const lista = filtroAtual === 'todos' ? historico : historico.filter(r => r.tipo === filtroAtual);
+    const el = document.getElementById('hist-list');
+    if (!lista.length) {
+      el.innerHTML = '<div class="empty">Nenhum registro encontrado.</div>';
+      return;
+    }
+    el.innerHTML = lista.slice(0, 80).map(row => {
+      const qtd = parseFloat(row.qtd) || 0;
+      const isPos = qtd >= 0;
+      const tl = row.tipo === 'Estoque' ? 'entrada' : 'saida';
+      const tt = row.tipo === 'Estoque' ? 'Entrada' : 'Saída';
+      return `<div class="hist-item">
+        <div>
+          <div class="hist-item-name">${row.item || '—'}</div>
+          <div class="hist-item-meta">${row.data || ''}${row.ref ? ' · ref: ' + row.ref : ''}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="hist-item-qtd ${isPos ? 'pos' : 'neg'}">${isPos ? '+' : ''}${qtd.toLocaleString('pt-BR')}</div>
+          <span class="tipo-tag ${tl}">${tt}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  async function submeter() {
+    const nome = document.getElementById('sel-insumo').value;
+    const qtd = parseFloat(document.getElementById('inp-qtd').value);
+    const item = insumos.find(i => i.nome === nome);
+    if (!tipoSel || !nome || !qtd) return;
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    const payload = { item: nome, ref: item ? item.ref : '', qtd, tipo: tipoSel };
+
+    try {
+      await fetch(API, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+      showMsg('form-msg', '✓ Lançamento registrado com sucesso!', 'success');
+      document.getElementById('sel-insumo').value = '';
+      document.getElementById('inp-qtd').value = '';
+      document.getElementById('ref-badge').textContent = '';
+      tipoSel = null;
+      document.getElementById('btn-entrada').classList.remove('selected');
+      document.getElementById('btn-saida').classList.remove('selected');
+      btn.className = 'submit-btn default-btn';
+      btn.textContent = 'Selecione tipo e insumo';
+      btn.disabled = true;
+      await loadHistorico();
+    } catch (e) {
+      showMsg('form-msg', '⚠ Erro ao enviar: ' + e.message, 'error');
+      btn.disabled = false;
+    }
+  }
+
+  async function loadAll() {
+    document.getElementById('saldo-sub').textContent = 'atualizando...';
+    await Promise.all([loadInsumos(), loadHistorico()]);
+  }
+
+  loadAll();
+</script>
+</body>
+</html>
