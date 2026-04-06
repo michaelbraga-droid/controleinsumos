@@ -4,26 +4,17 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Controle de Insumos</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#07131c;
-  --bg2:#0b1e2c;
-  --bg3:#0f2638;
-  --card:#0d2033;
-  --card2:#102540;
-  --b1:#193a54;
-  --b2:#1f4d6e;
-  --b3:#2a6690;
-  --acc:#1e90b8;
-  --acc2:#26aad4;
-  --acc3:#6dcfea;
-  --txt:#dff0f8;
-  --txt2:#7ab5cc;
-  --txt3:#3d7a96;
+  --bg:#07131c;--bg2:#0b1e2c;--bg3:#0f2638;
+  --card:#0d2033;--card2:#102540;
+  --b1:#193a54;--b2:#1f4d6e;--b3:#2a6690;
+  --acc:#1e90b8;--acc2:#26aad4;--acc3:#6dcfea;
+  --txt:#dff0f8;--txt2:#7ab5cc;--txt3:#3d7a96;
   --green:#22c55e;--gbg:#071a10;--gbd:#10471e;
-  --red:#f05050;  --rbg:#1a0707;--rbd:#4a1010;
+  --red:#f05050;--rbg:#1a0707;--rbd:#4a1010;
   --amber:#f0a830;--abg:#1a1007;--abd:#4a3010;
   --font:'DM Sans',system-ui,sans-serif;
   --mono:'DM Mono',monospace;
@@ -31,222 +22,141 @@
 html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--font);}
 body{display:flex;flex-direction:column;overflow:hidden;}
 
-/* ── TOPBAR ── */
-.topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 1.1rem;height:54px;
-  background:var(--bg2);border-bottom:1px solid var(--b1);
-  flex-shrink:0;
-}
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.1rem;height:54px;background:var(--bg2);border-bottom:1px solid var(--b1);flex-shrink:0;}
 .tb-brand{display:flex;align-items:center;gap:9px;}
 .tb-icon{width:30px;height:30px;border-radius:8px;background:var(--b3);display:flex;align-items:center;justify-content:center;font-size:15px;}
-.tb-title{font-size:14px;font-weight:600;letter-spacing:.01em;}
-.tb-right{display:flex;align-items:center;gap:8px;}
+.tb-title{font-size:14px;font-weight:600;}
+.tb-right{display:flex;align-items:center;gap:6px;}
 .tb-date{font-size:11px;color:var(--txt2);font-family:var(--mono);}
 .tb-sync{background:none;border:1px solid var(--b2);border-radius:7px;padding:5px 9px;color:var(--txt2);cursor:pointer;font-size:12px;font-family:var(--font);transition:all .15s;}
 .tb-sync:hover{background:var(--b2);color:var(--txt);}
+.tb-diag{background:var(--abg);border:1px solid var(--abd);border-radius:7px;padding:5px 9px;color:var(--amber);cursor:pointer;font-size:12px;font-family:var(--font);}
 
-/* ── SALDO BAR ── */
-.saldo-bar{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:8px;padding:10px 12px;
-  background:var(--bg2);border-bottom:1px solid var(--b1);
-  flex-shrink:0;
-}
+/* SALDO BAR */
+.saldo-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;background:var(--bg2);border-bottom:1px solid var(--b1);flex-shrink:0;}
 .saldo-item{background:var(--card);border:1px solid var(--b1);border-radius:10px;padding:8px 10px;}
 .saldo-lbl{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
 .saldo-val{font-size:20px;font-weight:600;font-family:var(--mono);line-height:1;}
-.saldo-val.g{color:var(--green);}
-.saldo-val.r{color:var(--red);}
-.saldo-val.a{color:var(--amber);}
+.saldo-val.g{color:var(--green);}.saldo-val.r{color:var(--red);}.saldo-val.a{color:var(--amber);}
 .saldo-sub{font-size:10px;color:var(--txt3);margin-top:2px;}
 
-/* ── MAIN SCROLL ── */
+/* MAIN */
 main{flex:1;overflow-y:auto;padding:12px 12px 72px;}
-
-/* ── SCREENS ── */
 .screen{display:none;animation:fadeIn .18s ease;}
 .screen.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
 
-/* ── FILTER BAR ── */
-.filter-bar{
-  display:flex;gap:8px;margin-bottom:10px;
-  background:var(--card);border:1px solid var(--b1);
-  border-radius:11px;padding:8px;
-}
-.filter-bar input{
-  flex:1;background:var(--bg3);border:1px solid var(--b1);
-  border-radius:7px;padding:8px 10px;color:var(--txt);
-  font-family:var(--font);font-size:13px;outline:none;
-  transition:border-color .15s;
-}
+/* FILTER BAR */
+.filter-bar{display:flex;gap:8px;margin-bottom:10px;background:var(--card);border:1px solid var(--b1);border-radius:11px;padding:8px;}
+.filter-bar input{flex:1;background:var(--bg3);border:1px solid var(--b1);border-radius:7px;padding:8px 10px;color:var(--txt);font-family:var(--font);font-size:13px;outline:none;transition:border-color .15s;}
 .filter-bar input:focus{border-color:var(--acc);}
 .filter-bar input::placeholder{color:var(--txt3);}
-.filter-bar input[type=date]{cursor:pointer;color-scheme:dark;}
+.filter-bar input[type=date]{cursor:pointer;color-scheme:dark;max-width:140px;}
 
-/* ── LIST ITEMS ── */
+/* LIST */
 .list-wrap{display:flex;flex-direction:column;gap:7px;}
-.list-item{
-  background:var(--card);border:1px solid var(--b1);
-  border-radius:10px;padding:11px 13px;
-  display:grid;grid-template-columns:1fr auto;
-  gap:3px;transition:border-color .15s;
-}
+.list-item{background:var(--card);border:1px solid var(--b1);border-radius:10px;padding:11px 13px;display:grid;grid-template-columns:1fr auto;gap:3px;transition:border-color .15s;}
 .list-item:hover{border-color:var(--b2);}
 .li-name{font-size:14px;font-weight:500;color:var(--txt);}
 .li-meta{font-size:11px;color:var(--txt3);margin-top:2px;font-family:var(--mono);}
 .li-qtd{font-size:18px;font-weight:600;font-family:var(--mono);text-align:right;}
-.li-qtd.pos{color:var(--green);}
-.li-qtd.neg{color:var(--red);}
-.li-qtd.amb{color:var(--amber);}
+.li-qtd.pos{color:var(--green);}.li-qtd.neg{color:var(--red);}.li-qtd.amb{color:var(--amber);}
 .li-tag{display:inline-block;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:500;margin-top:4px;}
 .tag-e{background:var(--gbg);color:var(--green);border:1px solid var(--gbd);}
 .tag-r{background:var(--abg);color:var(--amber);border:1px solid var(--abd);}
-.tag-x{background:var(--rbg);color:var(--red);  border:1px solid var(--rbd);}
+.tag-x{background:var(--rbg);color:var(--red);border:1px solid var(--rbd);}
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--txt3);font-size:14px;}
 .loading{text-align:center;padding:2rem;color:var(--txt3);font-size:13px;}
 
-/* ── RELATÓRIOS ── */
-.rel-filters{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
-.chip{
-  padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;
-  border:1px solid var(--b1);background:var(--card);color:var(--txt2);
-  font-family:var(--font);cursor:pointer;transition:all .12s;
-}
+/* CHIPS */
+.chip-bar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;}
+.chip{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--b1);background:var(--card);color:var(--txt2);font-family:var(--font);cursor:pointer;transition:all .12s;}
 .chip.active{background:var(--b3);color:var(--txt);border-color:var(--acc);}
+
+/* RELATÓRIOS */
 .rel-period{display:flex;gap:8px;margin-bottom:10px;}
-.rel-period input{
-  flex:1;background:var(--bg3);border:1px solid var(--b1);
-  border-radius:7px;padding:7px 10px;color:var(--txt);
-  font-family:var(--font);font-size:12px;outline:none;
-  color-scheme:dark;transition:border-color .15s;
-}
+.rel-period input{flex:1;background:var(--bg3);border:1px solid var(--b1);border-radius:7px;padding:7px 10px;color:var(--txt);font-family:var(--font);font-size:12px;outline:none;color-scheme:dark;transition:border-color .15s;}
 .rel-period input:focus{border-color:var(--acc);}
-.rel-card{
-  background:var(--card);border:1px solid var(--b1);
-  border-radius:11px;padding:12px 14px;margin-bottom:8px;
-  display:flex;align-items:center;justify-content:space-between;
-}
+.rel-card{background:var(--card);border:1px solid var(--b1);border-radius:11px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
 .rel-card:hover{border-color:var(--b2);}
 .rel-nome{font-size:14px;font-weight:500;}
 .rel-ref{font-size:11px;color:var(--txt3);font-family:var(--mono);margin-top:2px;}
 .rel-detail{font-size:11px;color:var(--txt3);margin-top:2px;}
 .rel-saldo{font-size:20px;font-weight:600;font-family:var(--mono);}
-.rel-saldo.pos{color:var(--green);}
-.rel-saldo.neg{color:var(--red);}
+.rel-saldo.pos{color:var(--green);}.rel-saldo.neg{color:var(--red);}
 
-/* ── FAB ── */
-.fab{
-  position:fixed;right:18px;
-  width:52px;height:52px;border-radius:50%;
-  border:none;cursor:pointer;font-size:26px;font-weight:300;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 16px rgba(0,0,0,.5);
-  transition:transform .15s,box-shadow .15s;z-index:40;
-}
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sec-hdr h2{font-size:12px;font-weight:500;color:var(--txt2);letter-spacing:.04em;text-transform:uppercase;}
+.sec-count{font-size:11px;color:var(--txt3);font-family:var(--mono);}
+
+/* FAB */
+.fab{position:fixed;right:18px;bottom:74px;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;font-size:28px;font-weight:300;display:none;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:transform .15s;z-index:40;}
 .fab:hover{transform:scale(1.08);}
 .fab:active{transform:scale(.95);}
-.fab-estoque   {background:var(--green);color:#051208;}
-.fab-requisicao{background:var(--amber);color:#100a02;}
-.fab-expedicao {background:var(--red);  color:#fff;}
-.fab-hist,.fab-rel{display:none!important;}
+.fab.visible{display:flex;}
+.fab-e{background:var(--green);color:#051208;}
+.fab-r{background:var(--amber);color:#100a02;}
+.fab-x{background:var(--red);color:#fff;}
 
-/* ── BOTTOM NAV ── */
-.bottomnav{
-  position:fixed;bottom:0;left:0;right:0;
-  height:62px;background:var(--bg2);
-  border-top:1px solid var(--b1);
-  display:flex;z-index:50;
-}
-.nav-btn{
-  flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:3px;border:none;background:transparent;
-  color:var(--txt3);font-family:var(--font);
-  font-size:10px;font-weight:500;cursor:pointer;
-  transition:color .15s;padding-bottom:2px;
-}
+/* BOTTOM NAV */
+.bottomnav{position:fixed;bottom:0;left:0;right:0;height:62px;background:var(--bg2);border-top:1px solid var(--b1);display:flex;z-index:50;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:transparent;color:var(--txt3);font-family:var(--font);font-size:10px;font-weight:500;cursor:pointer;transition:color .15s;padding-bottom:2px;position:relative;}
 .nav-btn.active{color:var(--acc2);}
-.nav-btn svg{width:20px;height:20px;transition:color .15s;}
-.nav-indicator{
-  position:absolute;bottom:62px;height:2px;
-  background:var(--acc2);border-radius:2px 2px 0 0;
-  transition:left .2s ease,width .2s ease;
-}
+.nav-btn.active::after{content:'';position:absolute;top:0;left:25%;right:25%;height:2px;background:var(--acc2);border-radius:0 0 3px 3px;}
+.nav-btn svg{width:20px;height:20px;}
 
-/* ── MODAL ── */
-.modal-bg{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.75);z-index:100;
-  align-items:flex-end;justify-content:center;
-  padding:0;
-}
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100;align-items:flex-end;justify-content:center;}
 .modal-bg.open{display:flex;}
-.modal{
-  background:var(--card2);
-  border:1px solid var(--b2);
-  border-radius:18px 18px 0 0;
-  padding:1.25rem 1.25rem 2rem;
-  width:100%;max-width:520px;
-  animation:slideUp .22s ease;
-  max-height:90vh;overflow-y:auto;
-}
+.modal{background:var(--card2);border:1px solid var(--b2);border-radius:18px 18px 0 0;padding:1.25rem 1.25rem 2rem;width:100%;max-width:520px;animation:slideUp .22s ease;max-height:90vh;overflow-y:auto;}
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;}
-.modal-title{font-size:16px;font-weight:600;}
+.modal-title{font-size:15px;font-weight:600;}
 .modal-close{background:var(--bg3);border:1px solid var(--b1);border-radius:8px;width:30px;height:30px;color:var(--txt2);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
-.modal-close:hover{background:var(--b1);}
 
-/* ── FORM ── */
+/* FORM */
 .form-group{margin-bottom:.85rem;}
-.form-lbl{display:block;font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:5px;letter-spacing:.02em;}
-.form-input,.form-select{
-  width:100%;padding:10px 13px;
-  background:var(--bg3);border:1px solid var(--b1);
-  border-radius:9px;color:var(--txt);
-  font-family:var(--font);font-size:14px;outline:none;
-  transition:border-color .15s;
-}
+.form-lbl{display:block;font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:5px;}
+.form-input,.form-select{width:100%;padding:10px 13px;background:var(--bg3);border:1px solid var(--b1);border-radius:9px;color:var(--txt);font-family:var(--font);font-size:14px;outline:none;transition:border-color .15s;}
 .form-input:focus,.form-select:focus{border-color:var(--acc);}
 .form-input::placeholder{color:var(--txt3);}
-.form-input:disabled{color:var(--txt3);cursor:not-allowed;opacity:.7;}
-.form-select{
-  appearance:none;cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233d7a96' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;
-}
+.form-input:disabled{color:var(--txt3);opacity:.7;cursor:not-allowed;}
+.form-select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233d7a96' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;}
 .form-select option{background:#0d2033;}
 .form-hint{font-size:11px;color:var(--acc3);margin-top:4px;font-family:var(--mono);}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.btn-submit{
-  width:100%;padding:12px;border-radius:10px;border:none;
-  cursor:pointer;font-family:var(--font);font-size:15px;font-weight:600;
-  transition:opacity .15s,transform .1s;margin-top:.25rem;
-}
+.btn-submit{width:100%;padding:12px;border-radius:10px;border:none;cursor:pointer;font-family:var(--font);font-size:15px;font-weight:600;transition:opacity .15s,transform .1s;margin-top:.25rem;}
 .btn-submit:disabled{opacity:.35;cursor:not-allowed;}
 .btn-submit:not(:disabled):active{transform:scale(.98);}
 .btn-e{background:var(--green);color:#051208;}
 .btn-r{background:var(--amber);color:#100a02;}
-.btn-x{background:var(--red);  color:#fff;}
+.btn-x{background:var(--red);color:#fff;}
 
-/* ── MSG ── */
+/* MSG */
 .msg{padding:9px 13px;border-radius:9px;margin-bottom:.85rem;font-size:13px;animation:fadeIn .2s;}
-.msg.ok {background:var(--gbg);color:var(--green);border:1px solid var(--gbd);}
-.msg.err{background:var(--rbg);color:var(--red);  border:1px solid var(--rbd);}
+.msg.ok{background:var(--gbg);color:var(--green);border:1px solid var(--gbd);}
+.msg.err{background:var(--rbg);color:var(--red);border:1px solid var(--rbd);}
+.msg.warn{background:var(--abg);color:var(--amber);border:1px solid var(--abd);}
 
-/* ── SECTION HEADER ── */
-.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.sec-hdr h2{font-size:13px;font-weight:500;color:var(--txt2);letter-spacing:.04em;text-transform:uppercase;}
-.sec-count{font-size:11px;color:var(--txt3);font-family:var(--mono);}
+/* DIAGNÓSTICO */
+.diag-panel{background:var(--bg3);border:1px solid var(--b2);border-radius:12px;padding:1rem;margin-bottom:1rem;}
+.diag-title{font-size:13px;font-weight:600;color:var(--acc2);margin-bottom:8px;}
+.diag-pre{font-size:11px;font-family:var(--mono);color:var(--txt2);white-space:pre-wrap;word-break:break-all;max-height:300px;overflow-y:auto;background:var(--bg);padding:8px;border-radius:7px;border:1px solid var(--b1);}
+.diag-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px;}
+.diag-key{color:var(--txt3);min-width:80px;}
+.diag-val{color:var(--txt);font-family:var(--mono);}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:500;}
+.badge.ok{background:var(--gbg);color:var(--green);}
+.badge.err{background:var(--rbg);color:var(--red);}
+.badge.warn{background:var(--abg);color:var(--amber);}
 
-/* input[type=date] dark */
 input[type=date]{color-scheme:dark;}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="tb-brand">
     <div class="tb-icon">📦</div>
@@ -254,119 +164,109 @@ input[type=date]{color-scheme:dark;}
   </div>
   <div class="tb-right">
     <span class="tb-date" id="tb-date"></span>
-    <button class="tb-sync" onclick="loadAll()">↻ Sync</button>
+    <button class="tb-diag" onclick="showScreen('diagnostico',5)">🔍 Diagnóstico</button>
+    <button class="tb-sync" onclick="loadAll()">↻</button>
   </div>
 </div>
 
-<!-- SALDO BAR -->
 <div class="saldo-bar">
-  <div class="saldo-item">
-    <div class="saldo-lbl">Estoque</div>
-    <div class="saldo-val g" id="s-estoque">—</div>
-    <div class="saldo-sub" id="s-estoque-n">— itens</div>
-  </div>
-  <div class="saldo-item">
-    <div class="saldo-lbl">Requisições</div>
-    <div class="saldo-val a" id="s-req">—</div>
-    <div class="saldo-sub" id="s-req-n">— itens</div>
-  </div>
-  <div class="saldo-item">
-    <div class="saldo-lbl">Expedições</div>
-    <div class="saldo-val r" id="s-exp">—</div>
-    <div class="saldo-sub" id="s-exp-n">— itens</div>
-  </div>
+  <div class="saldo-item"><div class="saldo-lbl">Estoque</div><div class="saldo-val g" id="s-e">—</div><div class="saldo-sub" id="s-e-n">—</div></div>
+  <div class="saldo-item"><div class="saldo-lbl">Requisições</div><div class="saldo-val a" id="s-r">—</div><div class="saldo-sub" id="s-r-n">—</div></div>
+  <div class="saldo-item"><div class="saldo-lbl">Expedições</div><div class="saldo-val r" id="s-x">—</div><div class="saldo-sub" id="s-x-n">—</div></div>
 </div>
 
-<!-- MAIN -->
 <main>
 
-  <!-- ABA ESTOQUE -->
+  <!-- ESTOQUE -->
   <div id="screen-estoque" class="screen active">
     <div class="filter-bar">
-      <input type="text" placeholder="🔍 Buscar insumo..." id="f-est-nome" oninput="renderLista('estoque')" />
-      <input type="date" id="f-est-data" onchange="renderLista('estoque')" />
+      <input type="text" placeholder="🔍 Buscar insumo..." id="fe-nome" oninput="renderLista('Estoque')"/>
+      <input type="date" id="fe-data" onchange="renderLista('Estoque')"/>
     </div>
-    <div class="sec-hdr">
-      <h2>Entradas de Estoque</h2>
-      <span class="sec-count" id="c-estoque">0 registros</span>
-    </div>
-    <div class="list-wrap" id="list-estoque"><div class="loading">Carregando...</div></div>
+    <div class="sec-hdr"><h2>Entradas de Estoque</h2><span class="sec-count" id="c-estoque">—</span></div>
+    <div class="list-wrap" id="list-Estoque"><div class="loading">Carregando...</div></div>
   </div>
 
-  <!-- ABA REQUISIÇÃO -->
+  <!-- REQUISIÇÃO -->
   <div id="screen-requisicao" class="screen">
     <div class="filter-bar">
-      <input type="text" placeholder="🔍 Buscar insumo..." id="f-req-nome" oninput="renderLista('requisicao')" />
-      <input type="date" id="f-req-data" onchange="renderLista('requisicao')" />
+      <input type="text" placeholder="🔍 Buscar insumo..." id="fr-nome" oninput="renderLista('Requisicao')"/>
+      <input type="date" id="fr-data" onchange="renderLista('Requisicao')"/>
     </div>
-    <div class="sec-hdr">
-      <h2>Requisições</h2>
-      <span class="sec-count" id="c-requisicao">0 registros</span>
-    </div>
-    <div class="list-wrap" id="list-requisicao"><div class="loading">Carregando...</div></div>
+    <div class="sec-hdr"><h2>Requisições</h2><span class="sec-count" id="c-requisicao">—</span></div>
+    <div class="list-wrap" id="list-Requisicao"><div class="loading">Carregando...</div></div>
   </div>
 
-  <!-- ABA EXPEDIÇÃO -->
+  <!-- EXPEDIÇÃO -->
   <div id="screen-expedicao" class="screen">
     <div class="filter-bar">
-      <input type="text" placeholder="🔍 Buscar insumo..." id="f-exp-nome" oninput="renderLista('expedicao')" />
-      <input type="date" id="f-exp-data" onchange="renderLista('expedicao')" />
+      <input type="text" placeholder="🔍 Buscar insumo..." id="fx-nome" oninput="renderLista('Expedicao')"/>
+      <input type="date" id="fx-data" onchange="renderLista('Expedicao')"/>
     </div>
-    <div class="sec-hdr">
-      <h2>Expedições</h2>
-      <span class="sec-count" id="c-expedicao">0 registros</span>
-    </div>
-    <div class="list-wrap" id="list-expedicao"><div class="loading">Carregando...</div></div>
+    <div class="sec-hdr"><h2>Expedições</h2><span class="sec-count" id="c-expedicao">—</span></div>
+    <div class="list-wrap" id="list-Expedicao"><div class="loading">Carregando...</div></div>
   </div>
 
-  <!-- ABA HISTÓRICO -->
+  <!-- HISTÓRICO -->
   <div id="screen-historico" class="screen">
     <div class="filter-bar">
-      <input type="text" placeholder="🔍 Buscar..." id="f-hist-nome" oninput="renderHistorico()" />
-      <input type="date" id="f-hist-data" onchange="renderHistorico()" />
+      <input type="text" placeholder="🔍 Buscar..." id="fh-nome" oninput="renderHistorico()"/>
+      <input type="date" id="fh-data" onchange="renderHistorico()"/>
     </div>
-    <div class="rel-filters">
-      <button class="chip active" onclick="setFiltroHist('todos',this)">Todos</button>
-      <button class="chip" onclick="setFiltroHist('Estoque',this)">Estoque</button>
-      <button class="chip" onclick="setFiltroHist('Requisicao',this)">Requisição</button>
-      <button class="chip" onclick="setFiltroHist('Expedicao',this)">Expedição</button>
+    <div class="chip-bar" id="chips-hist">
+      <button class="chip active" onclick="setChip(this,'hist','todos')">Todos</button>
+      <button class="chip" onclick="setChip(this,'hist','Estoque')">Estoque</button>
+      <button class="chip" onclick="setChip(this,'hist','Requisicao')">Requisição</button>
+      <button class="chip" onclick="setChip(this,'hist','Expedicao')">Expedição</button>
     </div>
-    <div class="sec-hdr">
-      <h2>Histórico Geral</h2>
-      <span class="sec-count" id="c-historico">0 registros</span>
-    </div>
+    <div class="sec-hdr"><h2>Histórico Geral</h2><span class="sec-count" id="c-historico">—</span></div>
     <div class="list-wrap" id="list-historico"><div class="loading">Carregando...</div></div>
   </div>
 
-  <!-- ABA RELATÓRIOS -->
+  <!-- RELATÓRIOS -->
   <div id="screen-relatorios" class="screen">
-    <div class="rel-filters" style="margin-bottom:8px;">
-      <button class="chip active" onclick="setFiltroRel('todos',this)">Todos</button>
-      <button class="chip" onclick="setFiltroRel('Estoque',this)">Estoque</button>
-      <button class="chip" onclick="setFiltroRel('Requisicao',this)">Requisição</button>
-      <button class="chip" onclick="setFiltroRel('Expedicao',this)">Expedição</button>
+    <div class="chip-bar" id="chips-rel">
+      <button class="chip active" onclick="setChip(this,'rel','todos')">Todos</button>
+      <button class="chip" onclick="setChip(this,'rel','Estoque')">Estoque</button>
+      <button class="chip" onclick="setChip(this,'rel','Requisicao')">Requisição</button>
+      <button class="chip" onclick="setChip(this,'rel','Expedicao')">Expedição</button>
     </div>
     <div class="rel-period">
-      <input type="date" id="rel-de" placeholder="De" onchange="renderRelatorio()" />
-      <input type="date" id="rel-ate" placeholder="Até" onchange="renderRelatorio()" />
+      <input type="date" id="rel-de" placeholder="De" onchange="renderRelatorio()"/>
+      <input type="date" id="rel-ate" placeholder="Até" onchange="renderRelatorio()"/>
     </div>
     <div class="sec-hdr">
       <h2>Saldo por Insumo</h2>
-      <button class="chip" onclick="limparPeriodo()" style="font-size:11px;padding:3px 10px;">Limpar período</button>
+      <button class="chip" style="font-size:11px;padding:3px 10px;" onclick="document.getElementById('rel-de').value='';document.getElementById('rel-ate').value='';renderRelatorio();">Limpar</button>
     </div>
     <div id="list-relatorios"><div class="loading">Carregando...</div></div>
+  </div>
+
+  <!-- DIAGNÓSTICO -->
+  <div id="screen-diagnostico" class="screen">
+    <div class="diag-panel">
+      <div class="diag-title">🔍 Diagnóstico de API</div>
+      <div id="diag-status"><div class="loading">Testando conexão...</div></div>
+    </div>
+    <div class="diag-panel" id="diag-raw-panel" style="display:none">
+      <div class="diag-title">📄 Amostra dos dados recebidos (primeiros 3 registros)</div>
+      <div class="diag-pre" id="diag-raw"></div>
+    </div>
+    <div class="diag-panel" id="diag-fields-panel" style="display:none">
+      <div class="diag-title">🗂 Campos detectados na resposta</div>
+      <div id="diag-fields"></div>
+    </div>
   </div>
 
 </main>
 
 <!-- FABs -->
-<button class="fab fab-estoque"    id="fab-estoque"    style="bottom:74px;" onclick="abrirModal('Estoque')">+</button>
-<button class="fab fab-requisicao" id="fab-requisicao" style="bottom:74px;display:none;" onclick="abrirModal('Requisicao')">+</button>
-<button class="fab fab-expedicao"  id="fab-expedicao"  style="bottom:74px;display:none;" onclick="abrirModal('Expedicao')">+</button>
+<button class="fab fab-e" id="fab-e" onclick="abrirModal('Estoque')">+</button>
+<button class="fab fab-r" id="fab-r" onclick="abrirModal('Requisicao')" style="display:none;">+</button>
+<button class="fab fab-x" id="fab-x" onclick="abrirModal('Expedicao')" style="display:none;">+</button>
 
 <!-- BOTTOM NAV -->
-<nav class="bottomnav" id="bottomnav">
-  <div class="nav-indicator" id="nav-indicator" style="width:20%;left:0;"></div>
+<nav class="bottomnav">
   <button class="nav-btn active" id="nav-estoque" onclick="showScreen('estoque',0)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="9.5" y1="14.5" x2="14.5" y2="14.5"/></svg>
     Estoque
@@ -389,7 +289,7 @@ input[type=date]{color-scheme:dark;}
   </button>
 </nav>
 
-<!-- MODAL LANÇAMENTO -->
+<!-- MODAL -->
 <div class="modal-bg" id="modal">
   <div class="modal">
     <div class="modal-header">
@@ -399,7 +299,7 @@ input[type=date]{color-scheme:dark;}
     <div id="modal-msg"></div>
     <div class="form-group">
       <label class="form-lbl">Data</label>
-      <input type="date" class="form-input" id="m-data" />
+      <input type="date" class="form-input" id="m-data"/>
       <div class="form-hint" id="m-hint"></div>
     </div>
     <div class="form-group">
@@ -411,28 +311,30 @@ input[type=date]{color-scheme:dark;}
     <div class="form-row">
       <div class="form-group">
         <label class="form-lbl">Referência</label>
-        <input type="text" class="form-input" id="m-ref" placeholder="Auto" disabled />
+        <input type="text" class="form-input" id="m-ref" placeholder="Auto" disabled/>
       </div>
       <div class="form-group">
         <label class="form-lbl">Quantidade</label>
-        <input type="number" class="form-input" id="m-qtd" min="1" step="1" placeholder="0" oninput="checkModal()" />
+        <input type="number" class="form-input" id="m-qtd" min="1" step="1" placeholder="0" oninput="checkModal()"/>
       </div>
     </div>
     <div class="form-group">
       <label class="form-lbl">Observação (opcional)</label>
-      <input type="text" class="form-input" id="m-obs" placeholder="Nota adicional..." />
+      <input type="text" class="form-input" id="m-obs" placeholder="Nota adicional..."/>
     </div>
     <button class="btn-submit btn-e" id="m-submit" onclick="submeter()" disabled>Salvar Lançamento</button>
   </div>
 </div>
 
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbwRLuYb27DOjC7_wLz703_QA7xt1Rgz0o36mcPMOkzIQzTXZsBJdIQT0biqbWsyLOfm/exec';
+// ═══════════════════════════════════════════════
+// NOVA URL DA API
+// ═══════════════════════════════════════════════
+const API = 'https://script.google.com/macros/s/AKfycbzco0W50GH_35EZCvFxtZ25isa-Ocssn_2xBduQakCsfv3kdJdZthxQGaeNyT4O5fvG/exec';
 
 let insumos = [], historico = [];
 let filtroHist = 'todos', filtroRel = 'todos';
 let tipoModal = 'Estoque';
-let telaAtual = 'estoque';
 
 // ─── DATA ───
 const hoje = new Date();
@@ -444,318 +346,369 @@ document.getElementById('m-data').value = dataISO;
 document.getElementById('m-hint').textContent = 'Turno: ' + dataBR;
 document.getElementById('m-data').addEventListener('change', function(){
   const [y,m,d] = this.value.split('-');
-  document.getElementById('m-hint').textContent = d && m && y ? `Turno: ${d}/${m}/${y}` : '';
+  document.getElementById('m-hint').textContent = d ? `Turno: ${d}/${m}/${y}` : '';
 });
 
 // ─── NAVEGAÇÃO ───
-const screens = ['estoque','requisicao','expedicao','historico','relatorios'];
-const fabs = {estoque:'fab-estoque',requisicao:'fab-requisicao',expedicao:'fab-expedicao'};
+const SCREENS = ['estoque','requisicao','expedicao','historico','relatorios','diagnostico'];
+const FABS = {estoque:'fab-e', requisicao:'fab-r', expedicao:'fab-x'};
 
 function showScreen(name, idx) {
-  screens.forEach(s => {
-    document.getElementById('screen-'+s).classList.remove('active');
-    document.getElementById('nav-'+s).classList.remove('active');
+  SCREENS.forEach(s => {
+    const sc = document.getElementById('screen-'+s);
+    const nb = document.getElementById('nav-'+s);
+    if(sc) sc.classList.remove('active');
+    if(nb) nb.classList.remove('active');
   });
-  // esconde todos os FABs
-  ['fab-estoque','fab-requisicao','fab-expedicao'].forEach(f => {
-    const el = document.getElementById(f);
-    if(el) el.style.display = 'none';
-  });
+  ['fab-e','fab-r','fab-x'].forEach(f => { const el=document.getElementById(f); if(el) el.style.display='none'; });
+
   document.getElementById('screen-'+name).classList.add('active');
-  document.getElementById('nav-'+name).classList.add('active');
-  // mostra FAB da aba (apenas 3 primeiras)
-  if(fabs[name]) { document.getElementById(fabs[name]).style.display = 'flex'; }
-  // indicador
-  const ind = document.getElementById('nav-indicator');
-  ind.style.width = '20%';
-  ind.style.left = (idx * 20) + '%';
-  telaAtual = name;
+  const nb = document.getElementById('nav-'+name);
+  if(nb) nb.classList.add('active');
+  if(FABS[name]) document.getElementById(FABS[name]).style.display = 'flex';
   if(name === 'relatorios') renderRelatorio();
+  if(name === 'diagnostico') runDiagnostico();
 }
 
-// ─── JSONP ───
+// ─── CHIPS ───
+function setChip(el, group, val) {
+  const container = group === 'hist' ? document.getElementById('chips-hist') : document.getElementById('chips-rel');
+  container.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  if(group === 'hist') { filtroHist = val; renderHistorico(); }
+  else { filtroRel = val; renderRelatorio(); }
+}
+
+// ─── API HELPERS ───
+// JSONP para contornar CORS nas requisições GET
 function fetchJsonp(url) {
   return new Promise((res, rej) => {
-    const cb = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    const cb = '_cb' + Date.now() + Math.random().toString(36).slice(2);
     const s = document.createElement('script');
-    window[cb] = data => { delete window[cb]; s.remove(); res(data); };
-    s.onerror = () => { delete window[cb]; s.remove(); rej(new Error('JSONP erro')); };
-    s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
+    const timer = setTimeout(() => { cleanup(); rej(new Error('Timeout')); }, 12000);
+    function cleanup(){ delete window[cb]; s.remove(); clearTimeout(timer); }
+    window[cb] = data => { cleanup(); res(data); };
+    s.onerror = () => { cleanup(); rej(new Error('Script error')); };
+    s.src = url + (url.includes('?')?'&':'?') + 'callback=' + cb;
     document.body.appendChild(s);
   });
 }
 
 async function apiFetch(url) {
+  // Tenta fetch normal (funciona se o script tiver CORS configurado)
   try {
-    const r = await fetch(url, {mode:'cors'});
+    const r = await fetch(url, {mode:'cors', cache:'no-store'});
     if(!r.ok) throw new Error('HTTP '+r.status);
-    return await r.json();
-  } catch {
-    return await fetchJsonp(url);
+    const text = await r.text();
+    return JSON.parse(text);
+  } catch(e1) {
+    // Fallback: JSONP
+    try {
+      return await fetchJsonp(url);
+    } catch(e2) {
+      throw new Error(`CORS: ${e1.message} | JSONP: ${e2.message}`);
+    }
   }
+}
+
+// ─── NORMALIZAÇÃO ROBUSTA DOS CAMPOS ───
+// Detecta qualquer variação de nome de campo que a planilha possa usar
+function normItem(r) {
+  // Tenta múltiplas variações de nome de campo
+  const get = (obj, ...keys) => {
+    for(const k of keys) {
+      if(obj[k] !== undefined && obj[k] !== null && obj[k] !== '') return String(obj[k]).trim();
+    }
+    return '';
+  };
+
+  return {
+    item:   get(r,'item','insumo','nome','produto','material','Item','Insumo','Nome','Produto'),
+    ref:    get(r,'ref','referencia','código','codigo','ref','Ref','Referencia','Código','Codigo'),
+    qtd:    parseFloat(get(r,'qtd','quantidade','qty','amount','Qtd','Quantidade','Qty') || 0),
+    tipo:   get(r,'tipo','type','categoria','Tipo','Type','Categoria'),
+    data:   get(r,'data','date','Data','Date','data_lancamento','DataLancamento'),
+    status: get(r,'status','Status','situacao','Situacao'),
+    obs:    get(r,'obs','observacao','note','Obs','Observacao','Note'),
+  };
+}
+
+// Normaliza o campo "tipo" para os 3 valores esperados
+function normTipo(tipo) {
+  const t = (tipo||'').toLowerCase().trim();
+  if(t.includes('estoque') || t === 'entrada' || t === 'e') return 'Estoque';
+  if(t.includes('requis') || t === 'requisição' || t === 'requisicao' || t === 'r') return 'Requisicao';
+  if(t.includes('expedi') || t === 'expedição' || t === 'expedicao' || t === 'saida' || t === 'saída' || t === 'x') return 'Expedicao';
+  return tipo; // retorna original se não reconhecer
+}
+
+// Normaliza data para comparação (aceita dd/mm/yyyy e yyyy-mm-dd)
+function normData(d) {
+  if(!d) return '';
+  d = String(d).trim();
+  if(/^\d{2}\/\d{2}\/\d{4}$/.test(d)) {
+    const [dd,mm,yyyy] = d.split('/');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+  if(/^\d{4}-\d{2}-\d{2}/.test(d)) return d.slice(0,10);
+  return d;
 }
 
 // ─── LOAD ───
 async function loadInsumos() {
   try {
     const data = await apiFetch(API + '?action=buscarInsumos');
-    insumos = Array.isArray(data) ? data : [];
+    const arr = Array.isArray(data) ? data : (data.data || data.items || data.insumos || []);
+    insumos = arr;
     const sel = document.getElementById('m-insumo');
     sel.innerHTML = '<option value="">Selecione o insumo...</option>';
-    insumos.forEach(i => {
+    arr.forEach(i => {
+      const nome = (i.nome||i.name||i.item||i.insumo||i.produto||String(i)).trim();
+      if(!nome) return;
       const o = document.createElement('option');
-      o.value = i.nome; o.textContent = i.nome;
+      o.value = nome; o.textContent = nome;
+      o.dataset.ref = i.ref||i.referencia||i.codigo||i.code||'';
       sel.appendChild(o);
     });
-  } catch(e) { console.warn('Insumos:', e.message); }
+  } catch(e) { console.warn('loadInsumos:', e.message); }
 }
 
 async function loadHistorico() {
   try {
-    const data = await apiFetch(API + '?action=buscarHistorico');
-    historico = Array.isArray(data) ? data : [];
+    const raw = await apiFetch(API + '?action=buscarHistorico');
+    // A resposta pode estar em diferentes estruturas
+    let arr = [];
+    if(Array.isArray(raw)) arr = raw;
+    else if(raw && Array.isArray(raw.data))    arr = raw.data;
+    else if(raw && Array.isArray(raw.items))   arr = raw.items;
+    else if(raw && Array.isArray(raw.registros)) arr = raw.registros;
+    else if(raw && Array.isArray(raw.historico)) arr = raw.historico;
+    else { console.warn('Formato inesperado:', raw); arr = []; }
+
+    // Normaliza cada registro
+    historico = arr.map(r => {
+      const n = normItem(r);
+      n.tipo = normTipo(n.tipo);
+      return n;
+    }).filter(r => r.item); // remove linhas sem nome
+
     calcSaldos();
-    renderLista('estoque');
-    renderLista('requisicao');
-    renderLista('expedicao');
+    renderLista('Estoque');
+    renderLista('Requisicao');
+    renderLista('Expedicao');
     renderHistorico();
   } catch(e) {
-    console.warn('Histórico:', e.message);
-    ['estoque','requisicao','expedicao','historico'].forEach(k => {
-      document.getElementById('list-'+k).innerHTML = '<div class="empty">⚠ Erro ao carregar dados.</div>';
+    console.error('loadHistorico:', e.message);
+    ['Estoque','Requisicao','Expedicao','historico'].forEach(k => {
+      const el = document.getElementById('list-'+k);
+      if(el) el.innerHTML = `<div class="empty">⚠ Erro ao carregar: ${e.message}</div>`;
     });
   }
 }
 
+// ─── SALDOS ───
 function calcSaldos() {
-  const e = historico.filter(r => r.tipo === 'Estoque');
-  const rq = historico.filter(r => r.tipo === 'Requisicao');
-  const ex = historico.filter(r => r.tipo === 'Expedicao');
-  const soma = arr => arr.reduce((a,r) => a + (parseFloat(r.qtd)||0), 0);
-
-  const sE  = soma(e);
-  const sRq = soma(rq);
-  const sEx = soma(ex);
-
-  const fmtEl = (id, val, cls) => {
+  const soma = tipo => historico.filter(r=>r.tipo===tipo).reduce((a,r)=>a+(r.qtd||0),0);
+  const count = tipo => historico.filter(r=>r.tipo===tipo).length;
+  const setS = (id, val, cls) => {
     const el = document.getElementById(id);
     el.textContent = (val>0?'+':'')+val.toLocaleString('pt-BR');
     el.className = 'saldo-val '+cls;
   };
-  fmtEl('s-estoque', sE,  sE  >= 0 ? 'g' : 'r');
-  fmtEl('s-req',     sRq, sRq >= 0 ? 'g' : 'a');
-  fmtEl('s-exp',     sEx, sEx >= 0 ? 'g' : 'r');
-  document.getElementById('s-estoque-n').textContent = e.length  + ' lançamentos';
-  document.getElementById('s-req-n').textContent     = rq.length + ' lançamentos';
-  document.getElementById('s-exp-n').textContent     = ex.length + ' lançamentos';
+  const se=soma('Estoque'), sr=soma('Requisicao'), sx=soma('Expedicao');
+  setS('s-e', se, se>=0?'g':'r');
+  setS('s-r', sr, sr>=0?'g':'a');
+  setS('s-x', sx, sx>=0?'g':'r');
+  document.getElementById('s-e-n').textContent = count('Estoque')   + ' lançamentos';
+  document.getElementById('s-r-n').textContent = count('Requisicao')+ ' lançamentos';
+  document.getElementById('s-x-n').textContent = count('Expedicao') + ' lançamentos';
 }
 
-// ─── RENDER LISTAS ───
-function getTagClass(tipo) {
-  if(tipo === 'Estoque')    return 'tag-e';
-  if(tipo === 'Requisicao') return 'tag-r';
-  return 'tag-x';
-}
-function getTagLabel(tipo) {
-  if(tipo === 'Estoque')    return 'Estoque';
-  if(tipo === 'Requisicao') return 'Requisição';
-  return 'Expedição';
-}
-function getQtdClass(tipo, qtd) {
-  if(tipo === 'Estoque') return qtd >= 0 ? 'pos' : 'neg';
-  if(tipo === 'Requisicao') return 'amb';
-  return 'neg';
-}
-
-function filtrarLista(tipo, nomeQ, dataQ) {
-  return historico.filter(r => {
-    if(r.tipo !== tipo) return false;
-    if(nomeQ && !((r.item||'').toLowerCase().includes(nomeQ))) return false;
-    if(dataQ) {
-      // data pode vir como dd/mm/yyyy ou yyyy-mm-dd
-      const rd = normData(r.data||'');
-      if(rd && rd !== dataQ) return false;
-    }
-    return true;
-  });
-}
-
-function normData(d) {
-  // converte dd/mm/yyyy → yyyy-mm-dd para comparar
-  if(!d) return '';
-  if(d.includes('/')) {
-    const [dd,mm,yyyy] = d.split('/');
-    return `${yyyy}-${mm}-${dd}`;
-  }
-  return d;
-}
+// ─── RENDER ───
+function tagCls(tipo){ return tipo==='Estoque'?'tag-e':tipo==='Requisicao'?'tag-r':'tag-x'; }
+function tagLbl(tipo){ return tipo==='Estoque'?'Estoque':tipo==='Requisicao'?'Requisição':'Expedição'; }
+function qtdCls(tipo,qtd){ if(tipo==='Estoque') return qtd>=0?'pos':'neg'; if(tipo==='Requisicao') return 'amb'; return 'neg'; }
 
 function renderLista(tipo) {
-  const tipoAPI = tipo === 'requisicao' ? 'Requisicao'
-                : tipo === 'expedicao'  ? 'Expedicao'
-                : 'Estoque';
-  const nomeQ = (document.getElementById('f-'+tipo[0]+'-'+(tipo==='requisicao'?'req':'exp'+tipo==='expedicao'?'':'est')+'-nome') ||
-                 document.getElementById('f-est-nome') ||
-                 {value:''}).value;
+  const ids = {Estoque:['fe-nome','fe-data'],Requisicao:['fr-nome','fr-data'],Expedicao:['fx-nome','fx-data']};
+  const [ni,di] = ids[tipo]||['',''];
+  const nQ = (document.getElementById(ni)?.value||'').toLowerCase().trim();
+  const dQ = document.getElementById(di)?.value||'';
 
-  // Seleciona os campos corretos por ID
-  let nomeEl, dataEl;
-  if(tipo === 'estoque')    { nomeEl = document.getElementById('f-est-nome'); dataEl = document.getElementById('f-est-data'); }
-  if(tipo === 'requisicao') { nomeEl = document.getElementById('f-req-nome'); dataEl = document.getElementById('f-req-data'); }
-  if(tipo === 'expedicao')  { nomeEl = document.getElementById('f-exp-nome'); dataEl = document.getElementById('f-exp-data'); }
+  const lista = historico.filter(r => {
+    if(r.tipo !== tipo) return false;
+    if(nQ && !(r.item||'').toLowerCase().includes(nQ)) return false;
+    if(dQ && normData(r.data) !== dQ) return false;
+    return true;
+  });
 
-  const nQ = (nomeEl?.value||'').toLowerCase().trim();
-  const dQ = dataEl?.value||'';
-  const lista = filtrarLista(tipoAPI, nQ, dQ);
-
-  document.getElementById('c-'+tipo).textContent = lista.length + ' registros';
+  const key = tipo==='Estoque'?'estoque':tipo==='Requisicao'?'requisicao':'expedicao';
+  document.getElementById('c-'+key).textContent = lista.length + ' registros';
   const el = document.getElementById('list-'+tipo);
-  if(!lista.length) { el.innerHTML = '<div class="empty">Nenhum registro encontrado.</div>'; return; }
-  el.innerHTML = lista.map(row => {
-    const qtd = parseFloat(row.qtd)||0;
-    const qc = getQtdClass(row.tipo, qtd);
-    const tc = getTagClass(row.tipo);
-    const tl = getTagLabel(row.tipo);
-    const sinal = row.tipo==='Estoque' && qtd>=0 ? '+' : '';
+  if(!lista.length){ el.innerHTML='<div class="empty">Nenhum registro encontrado.</div>'; return; }
+
+  el.innerHTML = lista.map(r => {
+    const sinal = r.tipo==='Estoque'&&r.qtd>=0?'+':'';
     return `<div class="list-item">
       <div>
-        <div class="li-name">${row.item||'—'}</div>
-        <div class="li-meta">${row.data||''} ${row.ref?'· '+row.ref:''} ${row.obs?'· '+row.obs:''}</div>
+        <div class="li-name">${r.item}</div>
+        <div class="li-meta">${r.data||''}${r.ref?' · '+r.ref:''}${r.obs?' · '+r.obs:''}</div>
       </div>
       <div style="text-align:right">
-        <div class="li-qtd ${qc}">${sinal}${qtd.toLocaleString('pt-BR')}</div>
-        <span class="li-tag ${tc}">${tl}</span>
+        <div class="li-qtd ${qtdCls(r.tipo,r.qtd)}">${sinal}${r.qtd.toLocaleString('pt-BR')}</div>
+        <span class="li-tag ${tagCls(r.tipo)}">${tagLbl(r.tipo)}</span>
       </div>
     </div>`;
   }).join('');
 }
 
 function renderHistorico() {
-  const nQ = (document.getElementById('f-hist-nome')?.value||'').toLowerCase().trim();
-  const dQ = document.getElementById('f-hist-data')?.value||'';
-  let lista = historico.filter(r => {
-    if(filtroHist !== 'todos' && r.tipo !== filtroHist) return false;
-    if(nQ && !((r.item||'').toLowerCase().includes(nQ))) return false;
-    if(dQ && normData(r.data||'') !== dQ) return false;
+  const nQ = (document.getElementById('fh-nome')?.value||'').toLowerCase().trim();
+  const dQ = document.getElementById('fh-data')?.value||'';
+  const lista = historico.filter(r => {
+    if(filtroHist!=='todos' && r.tipo!==filtroHist) return false;
+    if(nQ && !(r.item||'').toLowerCase().includes(nQ)) return false;
+    if(dQ && normData(r.data)!==dQ) return false;
     return true;
   });
   document.getElementById('c-historico').textContent = lista.length + ' registros';
   const el = document.getElementById('list-historico');
-  if(!lista.length) { el.innerHTML = '<div class="empty">Nenhum registro encontrado.</div>'; return; }
-  el.innerHTML = lista.map(row => {
-    const qtd = parseFloat(row.qtd)||0;
-    const isPos = qtd >= 0;
-    const tc = getTagClass(row.tipo);
-    const tl = getTagLabel(row.tipo);
-    let qc = 'pos';
-    if(row.tipo === 'Requisicao') qc = 'amb';
-    else if(!isPos || row.tipo === 'Expedicao') qc = 'neg';
+  if(!lista.length){ el.innerHTML='<div class="empty">Nenhum registro.</div>'; return; }
+  el.innerHTML = lista.map(r => {
+    const sinal = r.tipo==='Estoque'&&r.qtd>=0?'+':'';
     return `<div class="list-item">
       <div>
-        <div class="li-name">${row.item||'—'}</div>
-        <div class="li-meta">${row.data||''} ${row.ref?'· '+row.ref:''}</div>
+        <div class="li-name">${r.item}</div>
+        <div class="li-meta">${r.data||''}${r.ref?' · '+r.ref:''}</div>
       </div>
       <div style="text-align:right">
-        <div class="li-qtd ${qc}">${isPos&&row.tipo==='Estoque'?'+':''}${qtd.toLocaleString('pt-BR')}</div>
-        <span class="li-tag ${tc}">${tl}</span>
+        <div class="li-qtd ${qtdCls(r.tipo,r.qtd)}">${sinal}${r.qtd.toLocaleString('pt-BR')}</div>
+        <span class="li-tag ${tagCls(r.tipo)}">${tagLbl(r.tipo)}</span>
       </div>
     </div>`;
   }).join('');
-}
-
-function setFiltroHist(f, el) {
-  filtroHist = f;
-  document.querySelectorAll('#screen-historico .chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  renderHistorico();
-}
-
-// ─── RELATÓRIOS ───
-function setFiltroRel(f, el) {
-  filtroRel = f;
-  document.querySelectorAll('#screen-relatorios .rel-filters .chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  renderRelatorio();
-}
-function limparPeriodo() {
-  document.getElementById('rel-de').value = '';
-  document.getElementById('rel-ate').value = '';
-  renderRelatorio();
 }
 
 function renderRelatorio() {
   const de  = document.getElementById('rel-de')?.value||'';
   const ate = document.getElementById('rel-ate')?.value||'';
-  const el  = document.getElementById('list-relatorios');
-
-  let lista = historico.filter(r => {
-    if(filtroRel !== 'todos' && r.tipo !== filtroRel) return false;
-    const rd = normData(r.data||'');
+  const lista = historico.filter(r => {
+    if(filtroRel!=='todos' && r.tipo!==filtroRel) return false;
+    const rd = normData(r.data);
     if(de  && rd && rd < de)  return false;
     if(ate && rd && rd > ate) return false;
     return true;
   });
-
-  if(!lista.length) { el.innerHTML = '<div class="empty">Nenhum dado no período.</div>'; return; }
-
+  const el = document.getElementById('list-relatorios');
+  if(!lista.length){ el.innerHTML='<div class="empty">Sem dados no período.</div>'; return; }
   const mapa = {};
   lista.forEach(r => {
-    const k = (r.item||'—') + '||' + (r.tipo||'');
-    if(!mapa[k]) mapa[k] = { nome: r.item||'—', ref: r.ref||'', tipo: r.tipo||'', saldo: 0, ent: 0, sai: 0, n: 0 };
-    const q = parseFloat(r.qtd)||0;
-    mapa[k].saldo += q;
-    mapa[k].n++;
-    if(q >= 0) mapa[k].ent += q; else mapa[k].sai += Math.abs(q);
+    const k = r.item+'||'+r.tipo;
+    if(!mapa[k]) mapa[k]={nome:r.item,ref:r.ref,tipo:r.tipo,saldo:0,ent:0,sai:0,n:0};
+    mapa[k].saldo += r.qtd; mapa[k].n++;
+    if(r.qtd>=0) mapa[k].ent += r.qtd; else mapa[k].sai += Math.abs(r.qtd);
   });
-
-  el.innerHTML = Object.values(mapa).map(d => {
-    const tc = getTagClass(d.tipo);
-    const tl = getTagLabel(d.tipo);
-    const sc = d.saldo >= 0 ? 'pos' : 'neg';
-    return `<div class="rel-card">
+  el.innerHTML = Object.values(mapa).map(d => `
+    <div class="rel-card">
       <div>
-        <div class="rel-nome">${d.nome} <span class="li-tag ${tc}" style="margin-left:4px;">${tl}</span></div>
-        <div class="rel-ref">${d.ref}</div>
-        <div class="rel-detail">+${d.ent.toLocaleString('pt-BR')} entradas · ${d.sai.toLocaleString('pt-BR')} saídas · ${d.n} lançamentos</div>
+        <div class="rel-nome">${d.nome} <span class="li-tag ${tagCls(d.tipo)}" style="margin-left:4px;">${tagLbl(d.tipo)}</span></div>
+        <div class="rel-ref">${d.ref||''}</div>
+        <div class="rel-detail">+${d.ent.toLocaleString('pt-BR')} ent · ${d.sai.toLocaleString('pt-BR')} saí · ${d.n} lanç</div>
       </div>
-      <div class="rel-saldo ${sc}">${d.saldo>=0?'+':''}${d.saldo.toLocaleString('pt-BR')}</div>
-    </div>`;
-  }).join('');
+      <div class="rel-saldo ${d.saldo>=0?'pos':'neg'}">${d.saldo>=0?'+':''}${d.saldo.toLocaleString('pt-BR')}</div>
+    </div>`).join('');
+}
+
+// ─── DIAGNÓSTICO ───
+async function runDiagnostico() {
+  const st = document.getElementById('diag-status');
+  st.innerHTML = '<div class="loading">Testando API...</div>';
+  document.getElementById('diag-raw-panel').style.display='none';
+  document.getElementById('diag-fields-panel').style.display='none';
+
+  const results = [];
+
+  // Testa buscarInsumos
+  try {
+    const d = await apiFetch(API+'?action=buscarInsumos');
+    const arr = Array.isArray(d)?d:(d.data||d.items||[]);
+    results.push(`<div class="diag-row"><span class="diag-key">Insumos</span><span class="badge ok">✓ OK — ${arr.length} itens</span></div>`);
+    if(arr.length>0){
+      results.push(`<div class="diag-row"><span class="diag-key">Campos</span><span class="diag-val">${Object.keys(arr[0]).join(', ')}</span></div>`);
+    }
+  } catch(e) {
+    results.push(`<div class="diag-row"><span class="diag-key">Insumos</span><span class="badge err">✗ ${e.message}</span></div>`);
+  }
+
+  // Testa buscarHistorico
+  try {
+    const d = await apiFetch(API+'?action=buscarHistorico');
+    const arr = Array.isArray(d)?d:(d.data||d.items||d.registros||d.historico||[]);
+    results.push(`<div class="diag-row"><span class="diag-key">Histórico</span><span class="badge ok">✓ OK — ${arr.length} registros</span></div>`);
+    if(arr.length>0){
+      const campos = Object.keys(arr[0]);
+      results.push(`<div class="diag-row"><span class="diag-key">Campos</span><span class="diag-val">${campos.join(', ')}</span></div>`);
+
+      // Mostra amostra
+      document.getElementById('diag-raw').textContent = JSON.stringify(arr.slice(0,3), null, 2);
+      document.getElementById('diag-raw-panel').style.display='block';
+
+      // Analisa campos
+      const tipoVals = [...new Set(arr.map(r=>r.tipo||r.type||r.Tipo||'').filter(Boolean))];
+      const fieldsHtml = `
+        <div class="diag-row"><span class="diag-key">Campos API</span><span class="diag-val">${campos.join(', ')}</span></div>
+        <div class="diag-row"><span class="diag-key">Tipos únicos</span><span class="diag-val">${tipoVals.join(', ')||'(nenhum encontrado)'}</span></div>
+        <div class="diag-row"><span class="diag-key">Total</span><span class="diag-val">${arr.length} registros carregados</span></div>
+        <div class="diag-row"><span class="diag-key">Estoque</span><span class="diag-val">${historico.filter(r=>r.tipo==='Estoque').length} registros</span></div>
+        <div class="diag-row"><span class="diag-key">Requisicao</span><span class="diag-val">${historico.filter(r=>r.tipo==='Requisicao').length} registros</span></div>
+        <div class="diag-row"><span class="diag-key">Expedicao</span><span class="diag-val">${historico.filter(r=>r.tipo==='Expedicao').length} registros</span></div>
+      `;
+      document.getElementById('diag-fields').innerHTML = fieldsHtml;
+      document.getElementById('diag-fields-panel').style.display='block';
+    }
+  } catch(e) {
+    results.push(`<div class="diag-row"><span class="diag-key">Histórico</span><span class="badge err">✗ ${e.message}</span></div>`);
+    results.push(`<div class="msg warn" style="margin-top:8px;">⚠ Verifique se o Apps Script está publicado como <strong>"Qualquer pessoa"</strong> em Implantar → Gerenciar Implantações.</div>`);
+  }
+
+  st.innerHTML = results.join('');
 }
 
 // ─── MODAL ───
 function abrirModal(tipo) {
   tipoModal = tipo;
-  const labels = { Estoque:'Estoque (Entrada)', Requisicao:'Requisição (Saída)', Expedicao:'Expedição (Saída)' };
-  const btnCls = { Estoque:'btn-submit btn-e', Requisicao:'btn-submit btn-r', Expedicao:'btn-submit btn-x' };
-  const btnTxt = { Estoque:'↓ Salvar Entrada de Estoque', Requisicao:'↗ Salvar Requisição', Expedicao:'↑ Salvar Expedição' };
-  document.getElementById('modal-title').textContent = 'Novo Lançamento — ' + labels[tipo];
+  const cfg = {
+    Estoque:   {label:'Estoque (Entrada)',   btnCls:'btn-e', btnTxt:'↓ Salvar Entrada de Estoque'},
+    Requisicao:{label:'Requisição (Saída)',  btnCls:'btn-r', btnTxt:'↗ Salvar Requisição'},
+    Expedicao: {label:'Expedição (Saída)',   btnCls:'btn-x', btnTxt:'↑ Salvar Expedição'},
+  };
+  const c = cfg[tipo];
+  document.getElementById('modal-title').textContent = 'Novo Lançamento — '+c.label;
   const btn = document.getElementById('m-submit');
-  btn.className = btnCls[tipo]; btn.textContent = btnTxt[tipo]; btn.disabled = true;
+  btn.className = 'btn-submit '+c.btnCls;
+  btn.textContent = c.btnTxt;
+  btn.disabled = true;
   document.getElementById('modal-msg').innerHTML = '';
-  document.getElementById('modal').classList.add('open');
-  // restaura data para hoje se vazio
   if(!document.getElementById('m-data').value) document.getElementById('m-data').value = dataISO;
+  document.getElementById('modal').classList.add('open');
 }
+
 function fecharModal() {
   document.getElementById('modal').classList.remove('open');
-  document.getElementById('m-insumo').value = '';
-  document.getElementById('m-ref').value = '';
-  document.getElementById('m-qtd').value = '';
-  document.getElementById('m-obs').value = '';
+  ['m-insumo','m-ref','m-qtd','m-obs'].forEach(id => { document.getElementById(id).value=''; });
   document.getElementById('modal-msg').innerHTML = '';
   document.getElementById('m-submit').disabled = true;
 }
-document.getElementById('modal').addEventListener('click', e => { if(e.target === document.getElementById('modal')) fecharModal(); });
+document.getElementById('modal').addEventListener('click', e => { if(e.target===document.getElementById('modal')) fecharModal(); });
 
 function autoRef() {
-  const nome = document.getElementById('m-insumo').value;
-  const item = insumos.find(i => i.nome === nome);
-  document.getElementById('m-ref').value = item ? item.ref : '';
+  const sel = document.getElementById('m-insumo');
+  const opt = sel.options[sel.selectedIndex];
+  document.getElementById('m-ref').value = opt?.dataset?.ref || '';
   checkModal();
 }
 function checkModal() {
-  const ok = document.getElementById('m-insumo').value && parseFloat(document.getElementById('m-qtd').value) > 0;
+  const ok = document.getElementById('m-insumo').value && parseFloat(document.getElementById('m-qtd').value)>0;
   document.getElementById('m-submit').disabled = !ok;
 }
 
@@ -766,38 +719,32 @@ async function submeter() {
   const ref  = document.getElementById('m-ref').value;
   const data = document.getElementById('m-data').value;
   const obs  = document.getElementById('m-obs').value;
-  if(!nome || !qtd) return;
+  if(!nome||!qtd) return;
 
   const btn = document.getElementById('m-submit');
-  btn.disabled = true; btn.textContent = 'Enviando...';
+  btn.disabled=true; btn.textContent='Enviando...';
 
-  const payload = { item: nome, ref, qtd, tipo: tipoModal, data, obs };
   try {
     await fetch(API, {
-      method: 'POST', mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload)
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({item:nome, ref, qtd, tipo:tipoModal, data, obs})
     });
-    document.getElementById('modal-msg').innerHTML = '<div class="msg ok">✓ Lançamento registrado com sucesso!</div>';
-    document.getElementById('m-insumo').value = '';
-    document.getElementById('m-ref').value = '';
-    document.getElementById('m-qtd').value = '';
-    document.getElementById('m-obs').value = '';
-    btn.disabled = true;
-    // Recarrega dados após 2.5s
+    document.getElementById('modal-msg').innerHTML = '<div class="msg ok">✓ Lançamento registrado!</div>';
+    ['m-insumo','m-ref','m-qtd','m-obs'].forEach(id => { document.getElementById(id).value=''; });
+    btn.disabled=true;
     setTimeout(() => { loadHistorico(); fecharModal(); }, 2500);
   } catch(e) {
     document.getElementById('modal-msg').innerHTML = `<div class="msg err">⚠ Erro: ${e.message}</div>`;
-    btn.disabled = false;
+    btn.disabled=false;
   }
 }
 
 // ─── INIT ───
 async function loadAll() {
-  ['estoque','requisicao','expedicao','historico'].forEach(k => {
-    document.getElementById('list-'+k).innerHTML = '<div class="loading">Carregando...</div>';
+  ['Estoque','Requisicao','Expedicao','historico'].forEach(k=>{
+    const el=document.getElementById('list-'+k); if(el) el.innerHTML='<div class="loading">Carregando...</div>';
   });
-  document.getElementById('list-relatorios').innerHTML = '<div class="loading">Carregando...</div>';
   await loadInsumos();
   await loadHistorico();
 }
